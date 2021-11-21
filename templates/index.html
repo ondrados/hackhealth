@@ -14,14 +14,14 @@
 <body>
 <div id="app">
     <div class="container">
-        <div class="row">
+        <div class="row d-flex justify-content-center">
             <div class="col-6 align-self-center">
                 <h1>Aortic stenosis detector</h1>
                 <div class="mb-3">
                     <label for="formFile" class="form-label">Input file</label>
                     <input class="form-control" type="file" id="formFile" @change="handleFileUpload( $event )">
                     <button class="btn btn-primary my-2" @click="submitFile()">Submit</button>
-                    <p>{{ result_text }}</p>
+                    <p>[[ result_text ]]</p>
                 </div>
             </div>
         </div>
@@ -39,6 +39,7 @@
 <script src="https://unpkg.com/vue@next"></script>
 <script>
     const app = Vue.createApp({
+        delimiters : ['[[',']]'],
         data() {
             return {
                 file: "",
@@ -64,12 +65,14 @@
                         console.log(this.result_text);
                     }
                 )
-                    .catch(function () {
-                        console.log('FAILURE!!');
-                    });
+                .catch(function () {
+                    console.log('FAILURE!!');
+                });
             },
             handleFileUpload(event) {
                 this.file = event.target.files[0];
+                this.result = ""
+                this.result_text = ""
             }
         }
     })
